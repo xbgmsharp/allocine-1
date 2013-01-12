@@ -54,7 +54,10 @@ class AllocineAPI(object):
             if value is not None:
                 if name == "zip_code":
                     name = "zip"
+                if name == "theater_name":
+                    name = "location"
                 params = dict(params, **{name: value})
+        #TODO: Formats the date
         return self._send(url, params)
 
     def search(self, query):
@@ -103,15 +106,78 @@ class AllocineAPI(object):
         return self._get_review(uid, "public")
 
     def get_movies_times_in_city(self, zip_code, movie=None, date=None):
+        """
+        Return the movies times for all the theaters in the specified city.
+
+        Param:
+            ``zip_code`` -- The city zip code (ex: 26200).
+
+            ``movie`` -- (optional) A movie uid. If provided, return only the
+            schedule for the specified movie.
+
+            ``date`` -- (optional) A date object for the research. If not provided,
+            the current day is used.
+
+        """
         return self._get_movies_times(zip_code=zip_code, movie=movie, date=date)
 
     def get_movies_times_in_theaters(self, theaters, movie=None, date=None):
+        """
+        Return the movies times for all the specified theaters.
+
+        Param:
+            ``theaters`` -- A list with theaters code (ex: ["P0728", "P0093"]).
+
+            ``movie`` -- (optional) A movie uid. If provided, return only the
+            schedule for the specified movie.
+
+            ``date`` -- (optional) A date object for the research. If not provided,
+            the current day is used.
+
+        """
         return self._get_movies_times(theaters=theaters, movie=movie, date=date)
 
     def get_movies_times_in_theater(self, theater_code=None, theater_name=None, movie=None, date=None):
+        """
+        Return the movies times for the specified theater.
+        There is two ways to specified a theater, with its code or with its name.
+
+        One of the ``theater_code`` or ``theater_name`` parameters must be specified.
+
+        If the ``theater_name`` is specified, the ``movie`` parameter must be specified too.
+
+        Param:
+            ``theater_code`` -- (optional) The theater code (ex: "P0728").
+
+            ``theater_name`` -- (optional) The theater name (ex: "le palace montelimar").
+
+            ``movie`` -- (optional) A movie uid. If provided, return only the
+            schedule for the specified movie.
+
+            ``date`` -- (optional) A date object for the research. If not provided,
+            the current day is used.
+
+        """
         if theater_name is not None:
             return self._get_movies_times(theater_name=theater_name, movie=movie, date=date)
         return self._get_movies_times(theaters=[theater_code], movie=movie, date=date)
 
     def get_movies_times_near_coordinate(self, lat, long, radius, movie=None, date=None):
+        """
+        Return the movies times for all the theaters near the specified coordinate.
+
+        Param:
+            ``lat`` -- The latitude.
+
+            ``long`` -- The longitude.
+
+            ``radius`` -- The radius around the specified point, in kilometers.
+
+            ``movie`` -- (optional) A movie uid. If provided, return only the
+            schedule for the specified movie.
+
+            ``date`` -- (optional) A date object for the research. If not provided,
+            the current day is used.
+
+        """
         return self._get_movies_times(lat=lat, long=long, radius=radius, movie=movie, date=date)
