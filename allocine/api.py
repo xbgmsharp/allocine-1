@@ -2,7 +2,7 @@
 import requests
 
 
-class AllocineAPI(object):
+class AllocineApi(object):
     """ Allocine API wrapper. """
 
     def __init__(self):
@@ -222,17 +222,6 @@ class AllocineAPI(object):
 
         """
         return self._get_infos(uid, "tvseries", profile, media)
-
-    def get_movie_reviews(self, uid):
-        """
-        Return the reviews made by the press and the community about
-        the specified movie.
-
-        Param:
-            ``uid`` -- The movie unique ID.
-
-        """
-        return self._get_reviews(uid, None)
 
     def get_movie_press_reviews(self, uid):
         """

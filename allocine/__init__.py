@@ -1,1 +1,1 @@
-from allocine.api import AllocineAPI
+from allocine.api import AllocineApi
