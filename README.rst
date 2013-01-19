@@ -5,6 +5,11 @@ This is a python wrapper around the Allocine_ API v3.
 
 .. _Allocine: http://allocine.fr
 
+Run the tests
+-------------
+
+	python test_allocine.py
+
 
 Thanks
 ------
